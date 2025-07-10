@@ -1,6 +1,7 @@
 describe('Acesso ao site', () => {
   beforeEach(() => {
-    cy.visit('helpdesk-page/view/login.html')
+    
+    cy.visit('/view/login.html')
   })
 
 
@@ -30,5 +31,18 @@ describe('Acesso ao site', () => {
   it.only('Alteração de Usuário', () => {
     cy.get(':nth-child(5) > #action-5 > [onclick="triggerModalEdit(5)"]').click()
   })
+
+
+  after(() => {
+  const path = '../helpdesk-page/data/loggedIn.json';
+
+  cy.task('deleteFileIfExists', path).then((deleted) => {
+    if (deleted) {
+      cy.log(`Arquivo ${path} deletado`);
+    } else {
+      cy.log(`Arquivo ${path} não encontrado`);
+    }
+  });
+});
 
 })
