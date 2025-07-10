@@ -20,7 +20,7 @@ describe('Acesso ao site', () => {
     cy.get('button').click()
   })
 
-  it.only('Criação de Usuário', () =>{
+  it('Criação de Usuário', () =>{
     cy.get('#addButton').click()
     cy.get('#name').type('Gustavo Machado')
     cy.get('#email').type('gustavo@machado.com')
@@ -58,7 +58,8 @@ describe('Acesso ao site', () => {
     cy.get('button[class="addButton"]').click()
     cy.get('[for="name"] > input').type('caetano.veloso@outlook.com') //email ativo
     cy.get('[for="description"] > input').type('Loren Ipsum Teste') //3 palavras
-    cy.get('[for="description"] > input').click()
+    cy.get('.input-container > button').click()
+    cy.get('form > span').click()
   })
 
   it.only('Editar ticket', () =>{
@@ -72,9 +73,8 @@ describe('Acesso ao site', () => {
   it.only('Exclusao de ticket', () =>{
     cy.get('[href="./ticket.html"]').click()
     cy.get('[onclick="deleteCard(6)"]').click()
-    cy.get(':nth-child(6) > .info > .upper').then((result) =>{
-      expect(result.status).equal(404)
-    })
+    cy.reload()
+    cy.get(':nth-child(6) > .info > .upper').should('not.exist')
   })
 
   after(() => {
